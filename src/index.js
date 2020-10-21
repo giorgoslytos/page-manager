@@ -1,24 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Homepage from './pages/Homepage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Provider } from 'react-redux';
 import store from './redux/store';
-import NewArticle from './pages/NewArticle';
+import NewArticle from './pages/NewPage';
 import Header from './components/Header';
+import NotFoundPage from './pages/NotFoundPage';
 
 ReactDOM.render(
 	<Provider store={store}>
 		<div className="container">
 			<Header />
 			<Router>
-				<Route path={['/', '/homepage']} exact>
-					<Homepage />
-				</Route>
-				<Route path="/article/new" exact>
-					<NewArticle />
-				</Route>
+				<Switch>
+					<Route exact path={['/', '/homepage']} component={Homepage} />
+					<Route exact path="/page/new" component={NewArticle} />
+					<Route exact component={NotFoundPage} />
+				</Switch>
 			</Router>
 		</div>
 	</Provider>,

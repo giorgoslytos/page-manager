@@ -17,12 +17,26 @@ const Homepage = () => {
 	return (
 		<div>
 			<div className="text-right mb-4">
-				<Link to="/article/new">
-					<Button variant="primary">Add Article</Button>
+				<Link to="/page/new">
+					<Button variant="primary">Add Page</Button>
 				</Link>
 			</div>
 			{articles ? (
-				articles.map((article) => <Article props={article} key={article.id} />)
+				articles
+					.sort((a, b) => {
+						var nameA = b.publishedOn;
+						var nameB = a.publishedOn;
+						if (nameA < nameB) {
+							return -1;
+						}
+						if (nameA > nameB) {
+							return 1;
+						}
+
+						// names must be equal
+						return 0;
+					})
+					.map((article) => <Article props={article} key={article.id} />)
 			) : (
 				<SpinnerCustom />
 			)}

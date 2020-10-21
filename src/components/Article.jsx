@@ -24,19 +24,17 @@ const Article = ({ props }) => {
 					<Card.Title className="text-center">{props.title}</Card.Title>
 					<Card.Text>{props.description}</Card.Text>
 					<hr />
-					<Card.Text>
-						<div>
-							is active:{' '}
-							<span className={activeStatus.class}>{activeStatus.text}</span>
-						</div>
-						<div>type: {props.type}</div>
-						<div>
-							published on: {new Date(props.publishedOn).toLocaleDateString()},
-							at: {new Date(props.publishedOn).toLocaleTimeString()}
-						</div>
-					</Card.Text>
+					<div>
+						is active:{' '}
+						<span className={activeStatus.class}>{activeStatus.text}</span>
+					</div>
+					<div>type: {props.type}</div>
+					<div>
+						published on: {new Date(props.publishedOn).toLocaleDateString()},
+						at: {new Date(props.publishedOn).toLocaleTimeString()}
+					</div>
 
-					<div className="d-flex justify-content-between">
+					<div className="d-flex justify-content-between mt-4">
 						<Button
 							variant="outline-danger"
 							onClick={() => handleDelete(props.id)}

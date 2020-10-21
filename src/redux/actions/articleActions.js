@@ -1,5 +1,6 @@
 import {
 	DELETE_ARTICLE,
+	ADD_ARTICLE,
 	FIND_ARTICLE,
 	GET_ARTICLES,
 	DELETE_ERROR,
@@ -10,7 +11,7 @@ const URL = 'https://pagesmanagement.azurewebsites.net/api/ResponsivePages/';
 
 const getArticles = () => async (dispatch) => {
 	try {
-		const payload = await fetch(URL).then((res) => res.json());
+		let payload = await fetch(URL).then((res) => res.json());
 		dispatch({ type: GET_ARTICLES, payload });
 	} catch (err) {
 		console.log(err);
@@ -33,12 +34,26 @@ const deleteArticle = (id) => async (dispatch) => {
 	}
 };
 
-const addArticle = ({ title, description, type, isActive, publishedOn }) => ({
-	title,
-	description,
-	type,
-	isActive,
-	publishedOn,
-});
+const addArticle = (props) => async (dispatch) => {
+	console.log(JSON.stringify(props));
+	try {
+		const response = await fetch(URL, {
+			method: 'POST',
+			headers: {
+				'Content-type': 'application/json',
+			},
+			body: JSON.stringify(props),
+			// mode: 'no-cors',
+		})
+			.then((res) => res.json())
+			.then((res) => {
+				// do what you want with the response here
+				console.log(res);
+				dispatch({ type: ADD_ARTICLE, payload: res });
+			});
+	} catch (err) {
+		console.log(err);
+	}
+};
 
 export { getArticles, deleteArticle, addArticle };
