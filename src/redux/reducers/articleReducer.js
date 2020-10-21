@@ -5,7 +5,7 @@ import {
 	GET_ARTICLES,
 } from '../types';
 
-const articleReducer = (state = [], { type, payload }) => {
+const articleReducer = (state = null, { type, payload }) => {
 	// const { type, payload } = action;
 	switch (type) {
 		case GET_ARTICLES:
@@ -13,7 +13,7 @@ const articleReducer = (state = [], { type, payload }) => {
 		case DELETE_ARTICLE:
 			return state.filter((x) => x.id !== payload);
 		case ADD_ARTICLE:
-			return payload;
+			return [...state, payload];
 		default:
 			return state;
 	}

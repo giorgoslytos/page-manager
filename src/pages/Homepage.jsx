@@ -1,11 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Article from '../components/Article';
 import Button from 'react-bootstrap/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { getArticles } from '../redux/actions/articleActions';
+import SpinnerCustom from '../components/SpinnerCustom';
+import { Link } from 'react-router-dom';
 
 const Homepage = () => {
-	const count = useSelector((state) => state);
 	const dispatch = useDispatch();
 	const articles = useSelector((state) => state);
 
@@ -14,14 +15,17 @@ const Homepage = () => {
 	}, []);
 
 	return (
-		<div className="container">
-			<h1 className="my-5 text-center">Ordereze Exercise</h1>
+		<div>
 			<div className="text-right mb-4">
-				<Button variant="primary">Add Article</Button>
+				<Link to="/article/new">
+					<Button variant="primary">Add Article</Button>
+				</Link>
 			</div>
-			{articles.map((article) => (
-				<Article props={article} key={article.id} />
-			))}
+			{articles ? (
+				articles.map((article) => <Article props={article} key={article.id} />)
+			) : (
+				<SpinnerCustom />
+			)}
 		</div>
 	);
 };

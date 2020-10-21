@@ -13,20 +13,7 @@ const Article = ({ props }) => {
 	const dispatch = useDispatch();
 
 	const handleDelete = (id) => {
-		fetch(
-			`https://pagesmanagement.azurewebsites.net/api/ResponsivePages/${id}`,
-			{
-				method: 'DELETE',
-			}
-		)
-			.then((response) => {
-				return response.json();
-			})
-			.then((result) => {
-				console.log(result);
-				dispatch(deleteArticle(props.id));
-				// do what you want with the response here
-			});
+		dispatch(deleteArticle(id));
 	};
 
 	return (
