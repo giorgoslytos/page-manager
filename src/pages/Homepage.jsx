@@ -1,10 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Article from '../components/Article';
 import Button from 'react-bootstrap/Button';
-import { ArticleContext } from '../contexts/ArticleContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { getArticles } from '../redux/actions/articleActions';
 
 const Homepage = () => {
-	const { articles } = useContext(ArticleContext);
+	const count = useSelector((state) => state);
+	const dispatch = useDispatch();
+	const articles = useSelector((state) => state);
+
+	useEffect(() => {
+		dispatch(getArticles());
+	}, []);
 
 	return (
 		<div className="container">

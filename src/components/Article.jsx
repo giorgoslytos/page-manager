@@ -1,15 +1,16 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-import { ArticleContext } from '../contexts/ArticleContext';
+import { useDispatch } from 'react-redux';
+import { deleteArticle } from '../redux/actions/articleActions';
 
 const Article = ({ props }) => {
-	const { articles } = useContext(ArticleContext);
-
 	const [activeStatus] = useState({
 		class: props.isActive ? 'text-success' : 'text-danger',
 		text: props.isActive ? 'yes' : 'no',
 	});
+
+	const dispatch = useDispatch();
 
 	const handleDelete = (id) => {
 		fetch(
@@ -23,7 +24,7 @@ const Article = ({ props }) => {
 			})
 			.then((result) => {
 				console.log(result);
-
+				dispatch(deleteArticle(props.id));
 				// do what you want with the response here
 			});
 	};
