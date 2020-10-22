@@ -35,7 +35,6 @@ const deleteArticle = (id) => async (dispatch) => {
 };
 
 const addArticle = (props) => async (dispatch) => {
-	console.log(JSON.stringify(props));
 	try {
 		const response = await fetch(URL, {
 			method: 'POST',

@@ -24,16 +24,14 @@ const Homepage = () => {
 			{articles ? (
 				articles
 					.sort((a, b) => {
-						var nameA = b.publishedOn;
-						var nameB = a.publishedOn;
+						let nameA = b.publishedOn;
+						let nameB = a.publishedOn;
 						if (nameA < nameB) {
 							return -1;
 						}
 						if (nameA > nameB) {
 							return 1;
 						}
-
-						// names must be equal
 						return 0;
 					})
 					.map((article) => <Article props={article} key={article.id} />)

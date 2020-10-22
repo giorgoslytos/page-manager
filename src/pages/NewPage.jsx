@@ -9,6 +9,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
 import { addArticle } from '../redux/actions/articleActions';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 const NewPage = () => {
 	const dispatch = useDispatch();
@@ -16,6 +17,7 @@ const NewPage = () => {
 	const [description, setDescription] = useState('');
 	const [isActive, setIsActive] = useState('');
 	const [type, setType] = useState(9);
+	const history = useHistory();
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -31,7 +33,7 @@ const NewPage = () => {
 		pageProps['publishedOn'] = new Date().toISOString();
 		console.log(pageProps);
 		dispatch(addArticle(pageProps));
-		// window.location.href = '/';
+		history.push('/');
 	};
 
 	return (
@@ -42,9 +44,6 @@ const NewPage = () => {
 					<Card.Body>
 						<Card.Title>
 							<InputGroup>
-								<InputGroup.Prepend>
-									<InputGroup.Text>Title: </InputGroup.Text>
-								</InputGroup.Prepend>
 								<FormControl
 									required
 									value={title}
@@ -54,9 +53,6 @@ const NewPage = () => {
 							</InputGroup>
 						</Card.Title>
 						<InputGroup>
-							<InputGroup.Prepend>
-								<InputGroup.Text>Description</InputGroup.Text>
-							</InputGroup.Prepend>
 							<FormControl
 								as="textarea"
 								value={description}
@@ -74,26 +70,23 @@ const NewPage = () => {
 									setIsActive(e.target.value === 'yes' ? true : false)
 								}
 							>
-								<Row>
-									<Col>
-										<Form.Label as="legend" column>
-											Active:
-										</Form.Label>
-									</Col>
-									<Col>
-										<Form.Check
-											type="radio"
-											label="yes"
-											name="active"
-											value="yes"
-										/>
-										<Form.Check
-											type="radio"
-											label="no"
-											name="active"
-											value="no"
-										/>
-									</Col>
+								<Row className="ml-4">
+									<label as="legend" column>
+										Active:
+									</label>
+									<Form.Check
+										type="radio"
+										label="yes"
+										name="active"
+										value="yes"
+										className="mx-4"
+									/>
+									<Form.Check
+										type="radio"
+										label="no"
+										name="active"
+										value="no"
+									/>
 								</Row>
 							</Form.Group>
 							<Form.Group as={Col} controlId="formGridState">
