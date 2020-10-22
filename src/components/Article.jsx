@@ -3,6 +3,7 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { useDispatch } from 'react-redux';
 import { deleteArticle } from '../redux/actions/articleActions';
+import { Link } from 'react-router-dom';
 
 const Article = ({ props }) => {
 	const [activeStatus] = useState({
@@ -41,7 +42,12 @@ const Article = ({ props }) => {
 						>
 							Delete
 						</Button>
-						<Button variant="outline-primary">Edit</Button>
+						<div>
+							<Link to={`/page/${props.id}`}>
+								<Button variant="primary mx-3">Visit Page</Button>
+							</Link>
+							<Button variant="outline-info">Edit</Button>
+						</div>
 					</div>
 				</Card.Body>
 			</Card>

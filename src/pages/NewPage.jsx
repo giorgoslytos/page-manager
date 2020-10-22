@@ -51,6 +51,16 @@ const NewPage = () => {
 									placeholder="Title"
 								/>
 							</InputGroup>
+							{title.length > 50 ? (
+								<div className="mr-5 text-danger">
+									<small>
+										The length of the characters in title should be less or
+										equal to 50
+									</small>
+								</div>
+							) : (
+								''
+							)}
 						</Card.Title>
 						<InputGroup>
 							<FormControl
@@ -60,6 +70,16 @@ const NewPage = () => {
 								onChange={(e) => setDescription(e.target.value)}
 							/>
 						</InputGroup>
+						{description.length > 200 ? (
+							<div className="mr-5 text-danger">
+								<small>
+									The length of the characters in title should be less or equal
+									to 200
+								</small>
+							</div>
+						) : (
+							''
+						)}
 						<hr />
 						<Form.Group as={Row}>
 							<Form.Group
@@ -111,7 +131,15 @@ const NewPage = () => {
 							<Link to="/">
 								<Button variant="outline-danger">Cancel</Button>
 							</Link>
-							<Button type="submit" variant="outline-primary">
+							<Button
+								type="submit"
+								variant="outline-primary"
+								disabled={
+									title.length === 0 ||
+									title.length > 50 ||
+									description.length > 200
+								}
+							>
 								Add
 							</Button>
 						</div>

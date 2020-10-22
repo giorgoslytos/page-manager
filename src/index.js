@@ -8,6 +8,7 @@ import store from './redux/store';
 import NewArticle from './pages/NewPage';
 import Header from './components/Header';
 import NotFoundPage from './pages/NotFoundPage';
+import SinglePage from './pages/SinglePage';
 
 ReactDOM.render(
 	<Provider store={store}>
@@ -16,7 +17,8 @@ ReactDOM.render(
 			<Router>
 				<Switch>
 					<Route exact path={['/', '/homepage']} component={Homepage} />
-					<Route exact path="/page/new" component={NewArticle} />
+					<Route exact path="/new/page" component={NewArticle} />
+					<Route exact path="/page/:id" component={SinglePage} />
 					<Route exact component={NotFoundPage} />
 				</Switch>
 			</Router>

@@ -25,8 +25,6 @@ const deleteArticle = (id) => async (dispatch) => {
 		})
 			.then((res) => res.json())
 			.then((res) => {
-				// do what you want with the response here
-				console.log(res);
 				dispatch({ type: DELETE_ARTICLE, payload: id });
 			});
 	} catch (err) {
@@ -46,8 +44,6 @@ const addArticle = (props) => async (dispatch) => {
 		})
 			.then((res) => res.json())
 			.then((res) => {
-				// do what you want with the response here
-				console.log(res);
 				dispatch({ type: ADD_ARTICLE, payload: res });
 			});
 	} catch (err) {

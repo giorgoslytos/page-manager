@@ -17,7 +17,7 @@ const Homepage = () => {
 	return (
 		<div>
 			<div className="text-right mb-4">
-				<Link to="/page/new">
+				<Link to="/new/page">
 					<Button variant="primary">Add Page</Button>
 				</Link>
 			</div>
