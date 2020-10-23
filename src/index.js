@@ -17,7 +17,7 @@ ReactDOM.render(
 					<Route exact path={['/', '/homepage']} component={Homepage} />
 					<Route exact path="/new/page" component={AddEditPage} />
 					<Route exact path="/edit/page/:id/:slug" component={AddEditPage} />
-					<Route exact path="/page/:id/:slug" component={Page} />
+					<Route path="/page/:id" component={Page} />
 					<Route exact component={NotFoundPage} />
 				</Switch>
 			</Router>
