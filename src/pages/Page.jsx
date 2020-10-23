@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button } from 'react-bootstrap';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Header from '../components/Header';
 import Publication from '../components/Publication';
 import SpinnerCustom from '../components/SpinnerCustom';
@@ -9,6 +8,11 @@ const Page = () => {
 	const URL = 'https://pagesmanagement.azurewebsites.net/api/ResponsivePages/';
 	const { id } = useParams();
 	const [page, setPage] = useState(null);
+	const type = [
+		'Responsive page that shows the Menu',
+		'Responsive page for Events',
+		'Responsive page for general content',
+	];
 
 	const fetchPage = async (id) => {
 		setPage(
@@ -22,7 +26,6 @@ const Page = () => {
 	};
 
 	useEffect(() => {
-		console.log(`${URL}${id}`);
 		fetchPage(id);
 	}, []);
 
@@ -33,27 +36,15 @@ const Page = () => {
 			<Header title={page?.title} />
 			<p>{page?.description}</p>
 			<hr />
-			<Publication publishDate={page?.publishedOn} />
-			<div className="d-flex justify-content-between my-5">
-				<Link to="/">
-					<Button variant="outline-danger">Back</Button>
-				</Link>
-				<Link
-					to={`/edit/page/${id}/${encodeURI(
-						page?.title.trim().replace(/\s+/g, '-')
-					)}`}
-				>
-					<Button variant="outline-info">Edit</Button>
-				</Link>
+			<div className="d-flex justify-content-between">
+				<p>{type[page?.type]}</p>
+				<Publication publishDate={page?.publishedOn} />
 			</div>
 		</div>
 	) : (
 		<div className="mt-5">
 			<h1>We are sorry!!!</h1>
-			<p>This page is currently unavailable</p>
-			<Link to="/">
-				<Button variant="outline-danger my-5">Back</Button>
-			</Link>
+			<p>This page is currently unavailable...;(</p>
 		</div>
 	);
 };

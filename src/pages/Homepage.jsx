@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Article from '../components/Article';
-import { Button, Form } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { getArticles } from '../redux/actions/articleActions';
 import SpinnerCustom from '../components/SpinnerCustom';

@@ -54,7 +54,6 @@ const AddEditPage = () => {
 	}, []);
 
 	useEffect(() => {
-		console.log(page);
 		if (page) {
 			setTitle(page.title);
 			setDescription(page.description);
@@ -75,7 +74,6 @@ const AddEditPage = () => {
 			? (pageProps['isActive'] = isActive)
 			: delete pageProps['isActive'];
 		pageProps['publishedOn'] = new Date().toISOString();
-		console.log(pageProps);
 		dispatch(addArticle(pageProps));
 		history.push('/');
 	};
@@ -93,7 +91,6 @@ const AddEditPage = () => {
 			? (pageProps['isActive'] = isActive)
 			: delete pageProps['isActive'];
 		pageProps['publishedOn'] = new Date().toISOString();
-		console.log(pageProps);
 
 		try {
 			const response = await fetch(

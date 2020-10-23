@@ -1,9 +1,4 @@
-import {
-	FIND_ARTICLE,
-	ADD_ARTICLE,
-	DELETE_ARTICLE,
-	GET_ARTICLES,
-} from '../types';
+import { ADD_ARTICLE, DELETE_ARTICLE, GET_ARTICLES } from '../types';
 
 const articleReducer = (state = null, { type, payload }) => {
 	// const { type, payload } = action;

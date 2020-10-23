@@ -1,11 +1,4 @@
-import {
-	DELETE_ARTICLE,
-	ADD_ARTICLE,
-	FIND_ARTICLE,
-	GET_ARTICLES,
-	DELETE_ERROR,
-	GET_ARTICLE,
-} from '../types';
+import { DELETE_ARTICLE, ADD_ARTICLE, GET_ARTICLES } from '../types';
 
 const URL = 'https://pagesmanagement.azurewebsites.net/api/ResponsivePages/';
 
@@ -33,19 +26,16 @@ const deleteArticle = (id) => async (dispatch) => {
 };
 
 const addArticle = (props) => async (dispatch) => {
+	let response;
 	try {
-		const response = await fetch(URL, {
+		response = await fetch(URL, {
 			method: 'POST',
 			headers: {
 				'Content-type': 'application/json',
 			},
 			body: JSON.stringify(props),
-			// mode: 'no-cors',
-		})
-			.then((res) => res.json())
-			.then((res) => {
-				dispatch({ type: ADD_ARTICLE, payload: res });
-			});
+		});
+		dispatch({ type: ADD_ARTICLE, payload: await response.json() });
 	} catch (err) {
 		console.log(err);
 	}
