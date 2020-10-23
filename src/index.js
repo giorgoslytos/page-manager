@@ -5,7 +5,7 @@ import Homepage from './pages/Homepage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Provider } from 'react-redux';
 import store from './redux/store';
-import NewArticle from './pages/NewPage';
+import AddEditPage from './pages/AddEditPage';
 import NotFoundPage from './pages/NotFoundPage';
 import Page from './pages/Page';
 
@@ -15,7 +15,8 @@ ReactDOM.render(
 			<Router>
 				<Switch>
 					<Route exact path={['/', '/homepage']} component={Homepage} />
-					<Route exact path="/new/page" component={NewArticle} />
+					<Route exact path="/new/page" component={AddEditPage} />
+					<Route exact path="/edit/page/:id/:slug" component={AddEditPage} />
 					<Route exact path="/page/:id/:slug" component={Page} />
 					<Route exact component={NotFoundPage} />
 				</Switch>

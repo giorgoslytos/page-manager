@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Article from '../components/Article';
-import Button from 'react-bootstrap/Button';
+import { Button, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { getArticles } from '../redux/actions/articleActions';
 import SpinnerCustom from '../components/SpinnerCustom';
@@ -15,6 +15,18 @@ const Homepage = () => {
 		dispatch(getArticles());
 	}, []);
 
+	const sortByDate = (a, b) => {
+		let nameA = b.publishedOn;
+		let nameB = a.publishedOn;
+		if (nameA < nameB) {
+			return -1;
+		}
+		if (nameA > nameB) {
+			return 1;
+		}
+		return 0;
+	};
+
 	return (
 		<div className="mb-5">
 			<Header title="Ordereze Exercise" />
@@ -25,17 +37,7 @@ const Homepage = () => {
 			</div>
 			{articles ? (
 				articles
-					.sort((a, b) => {
-						let nameA = b.publishedOn;
-						let nameB = a.publishedOn;
-						if (nameA < nameB) {
-							return -1;
-						}
-						if (nameA > nameB) {
-							return 1;
-						}
-						return 0;
-					})
+					.sort((a, b) => sortByDate(a, b))
 					.map((article) => <Article props={article} key={article.id} />)
 			) : (
 				<SpinnerCustom />

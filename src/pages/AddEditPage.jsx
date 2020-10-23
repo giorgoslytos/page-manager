@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -11,14 +11,55 @@ import { addArticle } from '../redux/actions/articleActions';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
+import SpinnerCustom from '../components/SpinnerCustom';
 
-const NewPage = ({ id }) => {
+const AddEditPage = () => {
+	const URL = 'https://pagesmanagement.azurewebsites.net/api/ResponsivePages/';
+	const { id } = useParams();
+	const [page, setPage] = useState(null);
+	const [readyToRender, setReadyToRender] = useState(false);
+
 	const dispatch = useDispatch();
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
 	const [isActive, setIsActive] = useState('');
 	const [type, setType] = useState(9);
 	const history = useHistory();
+
+	const fetchPage = async (id) => {
+		try {
+			setPage(
+				await fetch(`${URL}${id}`, {
+					method: 'GET',
+					headers: {
+						'Content-type': 'application/json',
+					},
+				}).then((res) => res.json())
+			);
+		} catch (err) {
+			console.log(err);
+		} finally {
+			setReadyToRender(true);
+		}
+	};
+
+	useEffect(() => {
+		if (id) {
+			// ENTER EDIT MODE
+			setReadyToRender(false);
+			fetchPage(id);
+		} else {
+			setReadyToRender(true);
+		}
+	}, []);
+
+	useEffect(() => {
+		console.log(page);
+		setTitle(page?.title);
+		setDescription(page?.description);
+		setIsActive(page?.isActive);
+		setType(page?.type);
+	}, [page]);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -37,7 +78,9 @@ const NewPage = ({ id }) => {
 		history.push('/');
 	};
 
-	return (
+	return !readyToRender ? (
+		<SpinnerCustom />
+	) : (
 		<div>
 			<Header title="Add New Page" />
 			<Form onSubmit={handleSubmit}>
@@ -52,7 +95,7 @@ const NewPage = ({ id }) => {
 									placeholder="Title"
 								/>
 							</InputGroup>
-							{title.length > 50 ? (
+							{title?.length > 50 ? (
 								<div className="mr-5 text-danger">
 									<small>
 										The length of the characters in title should be less or
@@ -71,7 +114,7 @@ const NewPage = ({ id }) => {
 								onChange={(e) => setDescription(e.target.value)}
 							/>
 						</InputGroup>
-						{description.length > 200 ? (
+						{description?.length > 200 ? (
 							<div className="mr-5 text-danger">
 								<small>
 									The length of the characters in title should be less or equal
@@ -83,28 +126,22 @@ const NewPage = ({ id }) => {
 						)}
 						<hr />
 						<Form.Group as={Row}>
-							<Form.Group
-								as={Col}
-								className="mt-auto"
-								value={isActive}
-								onChange={(e) =>
-									setIsActive(e.target.value === 'yes' ? true : false)
-								}
-							>
+							<Form.Group as={Col} className="mt-auto">
 								<Row className="ml-4">
 									<label as="legend">Active:</label>
 									<Form.Check
 										type="radio"
 										label="yes"
-										name="active"
-										value="yes"
+										checked={isActive}
+										onChange={(e) => setIsActive(true)}
 										className="mx-4"
 									/>
 									<Form.Check
 										type="radio"
 										label="no"
+										checked={!isActive}
+										onChange={(e) => setIsActive(false)}
 										name="active"
-										value="no"
 									/>
 								</Row>
 							</Form.Group>
@@ -134,9 +171,9 @@ const NewPage = ({ id }) => {
 								type="submit"
 								variant="outline-primary"
 								disabled={
-									title.length === 0 ||
-									title.length > 50 ||
-									description.length > 200
+									title?.length === 0 ||
+									title?.length > 50 ||
+									description?.length > 200
 								}
 							>
 								Add
@@ -149,4 +186,4 @@ const NewPage = ({ id }) => {
 	);
 };
 
-export default NewPage;
+export default AddEditPage;

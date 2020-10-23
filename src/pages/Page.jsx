@@ -38,7 +38,11 @@ const Page = () => {
 				<Link to="/">
 					<Button variant="outline-danger">Back</Button>
 				</Link>
-				<Link to="/">
+				<Link
+					to={`/edit/page/${id}/${encodeURI(
+						page?.title.trim().replace(/\s+/g, '-')
+					)}`}
+				>
 					<Button variant="outline-info">Edit</Button>
 				</Link>
 			</div>

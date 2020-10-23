@@ -47,7 +47,13 @@ const Article = ({ props }) => {
 							>
 								<Button variant="primary mx-3">Visit Page</Button>
 							</Link>
-							<Button variant="outline-info">Edit</Button>
+							<Link
+								to={`/edit/page/${props.id}/${encodeURI(
+									props.title.trim().replace(/\s+/g, '-')
+								)}`}
+							>
+								<Button variant="outline-info">Edit</Button>
+							</Link>
 						</div>
 					</div>
 				</Card.Body>
