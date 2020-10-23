@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import { useDispatch } from 'react-redux';
 import { deleteArticle } from '../redux/actions/articleActions';
 import { Link } from 'react-router-dom';
+import Publication from './Publication';
 
 const Article = ({ props }) => {
 	const [activeStatus] = useState({
@@ -30,11 +31,7 @@ const Article = ({ props }) => {
 						<span className={activeStatus.class}>{activeStatus.text}</span>
 					</div>
 					<div>type: {props.type}</div>
-					<div>
-						published on: {new Date(props.publishedOn).toLocaleDateString()},
-						at: {new Date(props.publishedOn).toLocaleTimeString()}
-					</div>
-
+					<Publication publishDate={props.publishedOn} />
 					<div className="d-flex justify-content-between mt-4">
 						<Button
 							variant="outline-danger"
@@ -43,7 +40,11 @@ const Article = ({ props }) => {
 							Delete
 						</Button>
 						<div>
-							<Link to={`/page/${props.id}`}>
+							<Link
+								to={`/page/${props.id}/${encodeURI(
+									props.title.trim().replace(/\s+/g, '-')
+								)}`}
+							>
 								<Button variant="primary mx-3">Visit Page</Button>
 							</Link>
 							<Button variant="outline-info">Edit</Button>

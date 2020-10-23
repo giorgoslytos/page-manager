@@ -10,8 +10,9 @@ import FormControl from 'react-bootstrap/FormControl';
 import { addArticle } from '../redux/actions/articleActions';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import Header from '../components/Header';
 
-const NewPage = () => {
+const NewPage = ({ id }) => {
 	const dispatch = useDispatch();
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
@@ -38,7 +39,7 @@ const NewPage = () => {
 
 	return (
 		<div>
-			<h3 className="ml-4">Add New Page</h3>
+			<Header title="Add New Page" />
 			<Form onSubmit={handleSubmit}>
 				<Card className="my-3">
 					<Card.Body>
@@ -91,9 +92,7 @@ const NewPage = () => {
 								}
 							>
 								<Row className="ml-4">
-									<label as="legend" column>
-										Active:
-									</label>
+									<label as="legend">Active:</label>
 									<Form.Check
 										type="radio"
 										label="yes"

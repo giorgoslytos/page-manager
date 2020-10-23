@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getArticles } from '../redux/actions/articleActions';
 import SpinnerCustom from '../components/SpinnerCustom';
 import { Link } from 'react-router-dom';
+import Header from '../components/Header';
 
 const Homepage = () => {
 	const dispatch = useDispatch();
@@ -15,7 +16,8 @@ const Homepage = () => {
 	}, []);
 
 	return (
-		<div>
+		<div className="mb-5">
+			<Header title="Ordereze Exercise" />
 			<div className="text-right mb-4">
 				<Link to="/new/page">
 					<Button variant="primary">Add Page</Button>
