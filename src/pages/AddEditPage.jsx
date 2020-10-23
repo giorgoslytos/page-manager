@@ -55,13 +55,15 @@ const AddEditPage = () => {
 
 	useEffect(() => {
 		console.log(page);
-		setTitle(page?.title);
-		setDescription(page?.description);
-		setIsActive(page?.isActive);
-		setType(page?.type);
+		if (page) {
+			setTitle(page.title);
+			setDescription(page.description);
+			setIsActive(page.isActive);
+			setType(page.type);
+		}
 	}, [page]);
 
-	const handleSubmit = (e) => {
+	const handleAddition = (e) => {
 		e.preventDefault();
 		const pageProps = {};
 		pageProps['title'] = title;
@@ -78,12 +80,45 @@ const AddEditPage = () => {
 		history.push('/');
 	};
 
+	const handleUpdate = async (e) => {
+		e.preventDefault();
+		const pageProps = {};
+		pageProps['id'] = id;
+		pageProps['title'] = title;
+		description
+			? (pageProps['description'] = description)
+			: delete pageProps['description'];
+		type !== 9 ? (pageProps['type'] = type) : delete pageProps['type'];
+		isActive !== ''
+			? (pageProps['isActive'] = isActive)
+			: delete pageProps['isActive'];
+		pageProps['publishedOn'] = new Date().toISOString();
+		console.log(pageProps);
+
+		try {
+			const response = await fetch(
+				`https://pagesmanagement.azurewebsites.net/api/ResponsivePages/${id}`,
+				{
+					method: 'PUT',
+					headers: {
+						'Content-type': 'application/json',
+					},
+					body: JSON.stringify(pageProps),
+				}
+			).then((res) => res.json());
+		} catch (err) {
+			console.log(err);
+		} finally {
+			history.push('/');
+		}
+	};
+
 	return !readyToRender ? (
 		<SpinnerCustom />
 	) : (
 		<div>
-			<Header title="Add New Page" />
-			<Form onSubmit={handleSubmit}>
+			<Header title={!id ? 'Add New Page' : 'Edit Page'} />
+			<Form onSubmit={!id ? handleAddition : handleUpdate}>
 				<Card className="my-3">
 					<Card.Body>
 						<Card.Title>
@@ -176,7 +211,7 @@ const AddEditPage = () => {
 									description?.length > 200
 								}
 							>
-								Add
+								{!id ? 'Add' : 'Update'}
 							</Button>
 						</div>
 					</Card.Body>
