@@ -1,7 +1,6 @@
 import { ADD_ARTICLE, DELETE_ARTICLE, GET_ARTICLES } from '../types';
 
 const articleReducer = (state = null, { type, payload }) => {
-	// const { type, payload } = action;
 	switch (type) {
 		case GET_ARTICLES:
 			return payload;
@@ -14,4 +13,4 @@ const articleReducer = (state = null, { type, payload }) => {
 	}
 };
 
-export { articleReducer };
+export default articleReducer;

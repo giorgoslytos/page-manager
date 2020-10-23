@@ -1,11 +1,17 @@
-import { createStore, applyMiddleware } from 'redux';
+import { combineReducers, createStore, applyMiddleware } from 'redux';
 import ReduxThunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import logger from 'redux-logger';
-import { articleReducer } from './reducers/articleReducer';
+import articleReducer from './reducers/articleReducer';
+import sortReducer from './reducers/sortReducer';
+
+const rootReducer = combineReducers({
+	articleReducer,
+	sortReducer,
+});
 
 const store = createStore(
-	articleReducer,
+	rootReducer,
 	composeWithDevTools(applyMiddleware(logger, ReduxThunk))
 );
 
