@@ -78,7 +78,7 @@ export const updateArticle = (pageProps) => async (dispatch) => {
 		type: UPDATE_ARTICLE,
 	});
 	try {
-		const res = await fetch(`${URL}${pageProps['id']}`, {
+		await fetch(`${URL}${pageProps['id']}`, {
 			method: 'PUT',
 			headers: {
 				'Content-type': 'application/json',

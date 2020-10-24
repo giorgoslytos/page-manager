@@ -27,7 +27,7 @@ const Page = () => {
 
 	useEffect(() => {
 		fetchPage(id);
-	}, []);
+	}, [id]);
 
 	return !page ? (
 		<SpinnerCustom />

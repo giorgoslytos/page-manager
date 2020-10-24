@@ -51,7 +51,7 @@ const AddEditPage = () => {
 		} else {
 			setReadyToRender(true);
 		}
-	}, []);
+	}, [id]);
 
 	useEffect(() => {
 		if (page) {
@@ -62,9 +62,11 @@ const AddEditPage = () => {
 		}
 	}, [page]);
 
-	const handleAddition = (e) => {
-		e.preventDefault();
+	const populateModel = (mode) => {
 		const pageProps = {};
+		if (mode === 'update') {
+			pageProps['id'] = id;
+		}
 		pageProps['title'] = title;
 		description
 			? (pageProps['description'] = description)
@@ -74,25 +76,19 @@ const AddEditPage = () => {
 			? (pageProps['isActive'] = isActive)
 			: delete pageProps['isActive'];
 		pageProps['publishedOn'] = new Date().toISOString();
-		dispatch(addArticle(pageProps));
+
+		return pageProps;
+	};
+
+	const handleAddition = (e) => {
+		e.preventDefault();
+		dispatch(addArticle(populateModel()));
 		history.push('/');
 	};
 
 	const handleUpdate = (e) => {
 		e.preventDefault();
-		const pageProps = {};
-		pageProps['id'] = id;
-		pageProps['title'] = title;
-		description
-			? (pageProps['description'] = description)
-			: delete pageProps['description'];
-		type !== 9 ? (pageProps['type'] = type) : delete pageProps['type'];
-		isActive !== ''
-			? (pageProps['isActive'] = isActive)
-			: delete pageProps['isActive'];
-		pageProps['publishedOn'] = new Date().toISOString();
-
-		dispatch(updateArticle(pageProps));
+		dispatch(updateArticle(populateModel('update')));
 		history.push('/');
 	};
 
