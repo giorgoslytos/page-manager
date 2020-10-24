@@ -1,44 +1,93 @@
-import { DELETE_ARTICLE, ADD_ARTICLE, GET_ARTICLES } from '../types';
+import {
+	GET_ARTICLES,
+	GET_ARTICLES_SUCCESS,
+	GET_ARTICLES_FAILURE,
+	DELETE_ARTICLE,
+	DELETE_ARTICLE_SUCCESS,
+	DELETE_ARTICLE_FAILURE,
+	ADD_ARTICLE,
+	ADD_ARTICLE_SUCCESS,
+	ADD_ARTICLE_FAILURE,
+	UPDATE_ARTICLE,
+	UPDATE_ARTICLE_SUCCESS,
+	UPDATE_ARTICLE_FAILURE,
+} from '../types';
 
 const URL = 'https://pagesmanagement.azurewebsites.net/api/ResponsivePages/';
 
-const getArticles = () => async (dispatch) => {
+export const fetchArticles = () => async (dispatch) => {
+	dispatch({
+		type: GET_ARTICLES,
+	});
 	try {
-		let payload = await fetch(URL).then((res) => res.json());
-		dispatch({ type: GET_ARTICLES, payload });
+		const res = await fetch(URL);
+		const data = await res.json();
+		dispatch({
+			type: GET_ARTICLES_SUCCESS,
+			payload: data,
+		});
 	} catch (err) {
+		dispatch({
+			type: GET_ARTICLES_FAILURE,
+		});
 		console.log(err);
 	}
 };
 
-const deleteArticle = (id) => async (dispatch) => {
+export const deleteArticle = (id) => async (dispatch) => {
+	dispatch({
+		type: DELETE_ARTICLE,
+	});
 	try {
-		const response = await fetch(`${URL}${id}`, {
+		const res = await fetch(`${URL}${id}`, {
 			method: 'DELETE',
-		})
-			.then((res) => res.json())
-			.then((res) => {
-				dispatch({ type: DELETE_ARTICLE, payload: id });
-			});
+		});
+		const data = await res.json();
+		dispatch({
+			type: DELETE_ARTICLE_SUCCESS,
+			payload: data,
+		});
 	} catch (err) {
+		dispatch({ type: DELETE_ARTICLE_FAILURE });
 		console.log(err);
 	}
 };
 
-const addArticle = (props) => async (dispatch) => {
-	let response;
+export const addArticle = (props) => async (dispatch) => {
+	dispatch({
+		type: ADD_ARTICLE,
+	});
 	try {
-		response = await fetch(URL, {
+		const res = await fetch(URL, {
 			method: 'POST',
 			headers: {
 				'Content-type': 'application/json',
 			},
 			body: JSON.stringify(props),
 		});
-		dispatch({ type: ADD_ARTICLE, payload: await response.json() });
+		const data = await res.json();
+		dispatch({ type: ADD_ARTICLE_SUCCESS, payload: data });
 	} catch (err) {
+		dispatch({ type: ADD_ARTICLE_FAILURE });
 		console.log(err);
 	}
 };
 
-export { getArticles, deleteArticle, addArticle };
+export const updateArticle = (pageProps) => async (dispatch) => {
+	dispatch({
+		type: UPDATE_ARTICLE,
+	});
+	try {
+		const res = await fetch(`${URL}${pageProps['id']}`, {
+			method: 'PUT',
+			headers: {
+				'Content-type': 'application/json',
+			},
+			body: JSON.stringify(pageProps),
+		});
+		dispatch({ type: UPDATE_ARTICLE_SUCCESS, payload: pageProps });
+	} catch (err) {
+		dispatch({ type: UPDATE_ARTICLE_FAILURE });
+		console.log(err);
+	}
+};

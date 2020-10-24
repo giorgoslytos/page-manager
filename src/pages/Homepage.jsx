@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import Article from '../components/Article';
 import { Button, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { getArticles } from '../redux/actions/articleActions';
+import { fetchArticles } from '../redux/actions/articleActions';
 import SpinnerCustom from '../components/SpinnerCustom';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
@@ -13,8 +13,8 @@ const Homepage = () => {
 	const sortBy = useSelector((state) => state.sortReducer);
 
 	useEffect(() => {
-		dispatch(getArticles());
-	}, []);
+		if (articles.dataNotFetched) dispatch(fetchArticles());
+	}, [articles.dataNotFetched, dispatch]);
 
 	const sortByTitle = (a, b) => {
 		let nameA = b.title.toLowerCase();
@@ -62,8 +62,8 @@ const Homepage = () => {
 					<Button variant="primary">Add Page</Button>
 				</Link>
 			</div>
-			{articles ? (
-				articles
+			{!articles.dataNotFetched ? (
+				articles.data
 					.sort((a, b) =>
 						sortBy === 'Date' ? sortByDate(a, b) : sortByTitle(a, b)
 					)

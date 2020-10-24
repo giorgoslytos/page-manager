@@ -12,7 +12,7 @@ const rootReducer = combineReducers({
 
 const store = createStore(
 	rootReducer,
-	composeWithDevTools(applyMiddleware(logger, ReduxThunk))
+	composeWithDevTools(applyMiddleware(ReduxThunk, logger))
 );
 
 export default store;

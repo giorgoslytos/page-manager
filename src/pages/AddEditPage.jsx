@@ -7,7 +7,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
-import { addArticle } from '../redux/actions/articleActions';
+import { addArticle, updateArticle } from '../redux/actions/articleActions';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
@@ -78,7 +78,7 @@ const AddEditPage = () => {
 		history.push('/');
 	};
 
-	const handleUpdate = async (e) => {
+	const handleUpdate = (e) => {
 		e.preventDefault();
 		const pageProps = {};
 		pageProps['id'] = id;
@@ -92,22 +92,8 @@ const AddEditPage = () => {
 			: delete pageProps['isActive'];
 		pageProps['publishedOn'] = new Date().toISOString();
 
-		try {
-			const response = await fetch(
-				`https://pagesmanagement.azurewebsites.net/api/ResponsivePages/${id}`,
-				{
-					method: 'PUT',
-					headers: {
-						'Content-type': 'application/json',
-					},
-					body: JSON.stringify(pageProps),
-				}
-			).then((res) => res.json());
-		} catch (err) {
-			console.log(err);
-		} finally {
-			history.push('/');
-		}
+		dispatch(updateArticle(pageProps));
+		history.push('/');
 	};
 
 	return !readyToRender ? (

@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { deleteArticle } from '../redux/actions/articleActions';
 import { Link } from 'react-router-dom';
 import Publication from './Publication';
+import SpinnerCustom from './SpinnerCustom';
 
 const Article = ({ props }) => {
 	const dispatch = useDispatch();
@@ -13,7 +14,7 @@ const Article = ({ props }) => {
 		dispatch(deleteArticle(id));
 	};
 
-	return (
+	return props ? (
 		<div>
 			<Card className="my-3">
 				<Card.Body>
@@ -56,6 +57,8 @@ const Article = ({ props }) => {
 				</Card.Body>
 			</Card>
 		</div>
+	) : (
+		<SpinnerCustom />
 	);
 };
 
